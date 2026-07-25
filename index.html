@@ -97,7 +97,7 @@
   .grade-tabs {
     display: flex;
     gap: 8px;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
   }
 
   .grade-tab {
@@ -124,6 +124,20 @@
     color: #fff;
   }
 
+  .grade-tab.drop-target {
+    outline: 2px dashed #fff;
+    outline-offset: -4px;
+    background: #24408f;
+    border-color: #24408f;
+    color: #fff;
+  }
+
+  .drag-hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 0 0 20px;
+  }
+
   .subject-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -136,14 +150,23 @@
     border-radius: var(--radius);
     padding: 18px 14px;
     text-align: left;
-    cursor: pointer;
-    transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+    cursor: grab;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease, opacity 0.12s ease;
   }
 
   .subject-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(52, 87, 213, 0.12);
     border-color: var(--primary);
+  }
+
+  .subject-card.dragging {
+    opacity: 0.35;
+  }
+
+  .subject-card.drag-over {
+    outline: 2px dashed var(--primary);
+    outline-offset: 2px;
   }
 
   .subject-card .subject-category {
@@ -212,9 +235,16 @@
   }
 
   .topic-card {
+    position: relative;
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 16px;
+    padding-right: 40px;
+  }
+
+  .topic-card.custom {
+    border-color: var(--primary);
+    background: var(--primary-light);
   }
 
   .topic-card .topic-title {
@@ -229,6 +259,21 @@
     font-size: 14px;
   }
 
+  .topic-delete {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    padding: 4px;
+  }
+
+  .topic-delete:hover { color: #d9455f; }
+
   .tag {
     display: inline-block;
     background: var(--tag-bg);
@@ -237,6 +282,7 @@
     font-weight: 600;
     padding: 3px 10px;
     border-radius: 999px;
+    margin-right: 6px;
   }
 
   .empty-state {
@@ -245,11 +291,130 @@
     padding: 20px 4px;
   }
 
+  .add-topic-btn {
+    border: 1px dashed var(--border);
+    background: none;
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .add-topic-btn:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+  }
+
+  .add-topic-form {
+    border: 1px dashed var(--primary);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .add-topic-form label.field-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .add-topic-form input[type="text"],
+  .add-topic-form textarea {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    background: var(--card-bg);
+    color: var(--text);
+  }
+
+  .add-topic-form textarea {
+    resize: vertical;
+    min-height: 54px;
+  }
+
+  .field-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .field-checkboxes label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 4px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+
+  .btn-primary {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13.5px;
+  }
+
+  .btn-secondary {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 9px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13.5px;
+  }
+
   .site-footer {
     border-top: 1px solid var(--border);
     padding: 20px 0 40px;
     color: var(--muted);
     font-size: 13px;
+  }
+
+  .footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .reset-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .reset-btn:hover {
+    border-color: #d9455f;
+    color: #d9455f;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -284,6 +449,7 @@
       <button class="grade-tab" data-grade="2">2학년</button>
       <button class="grade-tab" data-grade="3">3학년</button>
     </nav>
+    <p class="drag-hint">과목 카드를 위 학년 탭으로 끌어다 놓으면 다른 학년으로 옮길 수 있고, 같은 화면 안에서 끌면 순서도 바꿀 수 있어요. (학교 교육과정에 맞게 자유롭게 편집하세요)</p>
 
     <section class="subject-grid" id="subjectGrid" aria-live="polite"></section>
 
@@ -297,13 +463,14 @@
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">
-      <p>※ 아래 주제는 참고용 예시입니다.</p>
+    <div class="wrap footer-row">
+      <p>※ 위 주제는 참고용 예시이며, 직접 추가한 주제와 과목 배치는 이 브라우저에 저장됩니다.</p>
+      <button class="reset-btn" id="resetBtn" type="button">기본값으로 초기화</button>
     </div>
   </footer>
 
 <script>
-  // 2022 개정 교육과정 보통교과 기준 데이터
+  // 2022 개정 교육과정 보통교과 기준 기본 데이터
   // 학년(grade) > 과목(subjects) > 주제(topics)
   // category: 공통과목 / 일반선택 / 진로선택 / 융합선택
   // 각 topic의 fields: 해당 주제와 관련 있는 진로 분야 목록
@@ -311,7 +478,7 @@
 
   var FIELDS = ["인문계열", "사회계열", "자연계열", "공학계열", "의약계열", "예체능·교육계열"];
 
-  var DATA = {
+  var DEFAULT_DATA = {
     1: [
       {
         name: "공통국어1·2",
@@ -483,6 +650,50 @@
     ]
   };
 
+  var STORAGE_KEY = "saengibu_topic_data_v1";
+
+  function genId(prefix) {
+    return prefix + "_" + Date.now().toString(36) + "_" + Math.floor(Math.random() * 100000).toString(36);
+  }
+
+  function ensureIds(data) {
+    Object.keys(data).forEach(function (grade) {
+      data[grade].forEach(function (subject) {
+        if (!subject.id) subject.id = genId("subj");
+        subject.topics.forEach(function (topic) {
+          if (!topic.id) topic.id = genId("topic");
+        });
+      });
+    });
+    return data;
+  }
+
+  function loadData() {
+    try {
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      // 저장된 데이터를 읽을 수 없으면 기본값 사용
+    }
+    var fresh = ensureIds(JSON.parse(JSON.stringify(DEFAULT_DATA)));
+    persist(fresh);
+    return fresh;
+  }
+
+  function persist(data) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+      // 저장 공간이 없거나 접근 불가 시 조용히 무시
+    }
+  }
+
+  var DATA = loadData();
+
+  function saveData() {
+    persist(DATA);
+  }
+
   var fieldTabs = document.getElementById("fieldTabs");
   var gradeTabs = document.getElementById("gradeTabs");
   var subjectGrid = document.getElementById("subjectGrid");
@@ -490,9 +701,24 @@
   var topicSubjectName = document.getElementById("topicSubjectName");
   var topicList = document.getElementById("topicList");
   var closePanel = document.getElementById("closePanel");
+  var resetBtn = document.getElementById("resetBtn");
 
   var currentGrade = 1;
   var currentField = "전체";
+  var openSubjectId = null;
+  var addFormOpen = false;
+
+  var draggedSubjectId = null;
+  var draggedFromGrade = null;
+
+  function findSubjectById(id) {
+    for (var g = 1; g <= 3; g++) {
+      for (var i = 0; i < DATA[g].length; i++) {
+        if (DATA[g][i].id === id) return DATA[g][i];
+      }
+    }
+    return null;
+  }
 
   function renderFieldTabs() {
     fieldTabs.innerHTML = "";
@@ -523,6 +749,9 @@
       var visible = visibleTopicsOf(subject);
       var btn = document.createElement("button");
       btn.className = "subject-card" + (visible.length ? " ready" : "");
+      btn.setAttribute("draggable", "true");
+      btn.setAttribute("data-subject-id", subject.id);
+      btn.setAttribute("data-grade", grade);
 
       var meta;
       if (subject.topics.length === 0) {
@@ -548,32 +777,197 @@
     }
   }
 
-  function openTopics(subject) {
+  function renderTopicPanel() {
+    var subject = findSubjectById(openSubjectId);
+    if (!subject) {
+      topicPanel.hidden = true;
+      return;
+    }
+
     topicSubjectName.textContent = subject.name + " (" + subject.category + ")";
     topicList.innerHTML = "";
 
     var visible = visibleTopicsOf(subject);
 
     if (subject.topics.length === 0) {
-      topicList.innerHTML = '<p class="empty-state">이 과목의 주제 자료는 곧 추가될 예정입니다.</p>';
+      var p1 = document.createElement("p");
+      p1.className = "empty-state";
+      p1.textContent = "이 과목의 주제 자료가 아직 없습니다. 아래에서 직접 추가해 보세요.";
+      topicList.appendChild(p1);
     } else if (visible.length === 0) {
-      topicList.innerHTML = '<p class="empty-state">선택한 진로 분야(' + currentField + ')에 해당하는 주제가 아직 없습니다. 다른 분야를 선택해 보세요.</p>';
+      var p2 = document.createElement("p");
+      p2.className = "empty-state";
+      p2.textContent = "선택한 진로 분야(" + currentField + ")에 해당하는 주제가 아직 없습니다. 다른 분야를 선택하거나 새 주제를 추가해 보세요.";
+      topicList.appendChild(p2);
     } else {
-      for (var i = 0; i < visible.length; i++) {
-        var topic = visible[i];
+      visible.forEach(function (topic) {
         var card = document.createElement("div");
-        card.className = "topic-card";
-        card.innerHTML =
-          '<p class="topic-title">' + topic.title + '</p>' +
-          '<p class="topic-desc">' + topic.desc + '</p>' +
-          '<span class="tag">' + topic.tag + '</span>';
+        card.className = "topic-card" + (topic.custom ? " custom" : "");
+
+        var title = document.createElement("p");
+        title.className = "topic-title";
+        title.textContent = topic.title;
+        card.appendChild(title);
+
+        if (topic.desc) {
+          var desc = document.createElement("p");
+          desc.className = "topic-desc";
+          desc.textContent = topic.desc;
+          card.appendChild(desc);
+        }
+
+        var tag = document.createElement("span");
+        tag.className = "tag";
+        tag.textContent = topic.tag || "직접 추가";
+        card.appendChild(tag);
+
+        if (topic.custom) {
+          var customTag = document.createElement("span");
+          customTag.className = "tag";
+          customTag.textContent = "내가 추가함";
+          card.appendChild(customTag);
+        }
+
+        var del = document.createElement("button");
+        del.className = "topic-delete";
+        del.setAttribute("aria-label", "주제 삭제");
+        del.textContent = "✕";
+        del.addEventListener("click", function () {
+          if (!confirm('"' + topic.title + '" 주제를 삭제할까요?')) return;
+          var idx = subject.topics.findIndex(function (t) { return t.id === topic.id; });
+          if (idx !== -1) subject.topics.splice(idx, 1);
+          saveData();
+          renderTopicPanel();
+          renderSubjects(currentGrade);
+        });
+        card.appendChild(del);
+
         topicList.appendChild(card);
-      }
+      });
     }
 
+    renderAddTopicArea(subject);
+
     topicPanel.hidden = false;
+  }
+
+  function renderAddTopicArea(subject) {
+    if (!addFormOpen) {
+      var addBtn = document.createElement("button");
+      addBtn.className = "add-topic-btn";
+      addBtn.type = "button";
+      addBtn.textContent = "+ 주제 직접 추가하기";
+      addBtn.addEventListener("click", function () {
+        addFormOpen = true;
+        renderTopicPanel();
+      });
+      topicList.appendChild(addBtn);
+      return;
+    }
+
+    var form = document.createElement("div");
+    form.className = "add-topic-form";
+
+    var titleLabel = document.createElement("label");
+    titleLabel.className = "field-label";
+    titleLabel.textContent = "주제 제목 *";
+    var titleInput = document.createElement("input");
+    titleInput.type = "text";
+    titleInput.placeholder = "예: 우리 학교 급식 데이터 분석";
+
+    var descLabel = document.createElement("label");
+    descLabel.className = "field-label";
+    descLabel.textContent = "간단한 설명 (선택)";
+    var descInput = document.createElement("textarea");
+    descInput.placeholder = "어떤 활동을 하는 주제인지 간단히 적어주세요.";
+
+    var tagLabel = document.createElement("label");
+    tagLabel.className = "field-label";
+    tagLabel.textContent = "활동 태그 (선택)";
+    var tagInput = document.createElement("input");
+    tagInput.type = "text";
+    tagInput.placeholder = "예: 탐구활동, 독서연계, 프로젝트 등";
+
+    var fieldsLabel = document.createElement("label");
+    fieldsLabel.className = "field-label";
+    fieldsLabel.textContent = "관련 진로 분야 (선택, 여러 개 가능)";
+    var fieldsBox = document.createElement("div");
+    fieldsBox.className = "field-checkboxes";
+    var checkboxes = FIELDS.map(function (field) {
+      var label = document.createElement("label");
+      var cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.value = field;
+      label.appendChild(cb);
+      label.appendChild(document.createTextNode(field));
+      fieldsBox.appendChild(label);
+      return cb;
+    });
+
+    var actions = document.createElement("div");
+    actions.className = "form-actions";
+
+    var cancelBtn = document.createElement("button");
+    cancelBtn.type = "button";
+    cancelBtn.className = "btn-secondary";
+    cancelBtn.textContent = "취소";
+    cancelBtn.addEventListener("click", function () {
+      addFormOpen = false;
+      renderTopicPanel();
+    });
+
+    var saveBtn = document.createElement("button");
+    saveBtn.type = "button";
+    saveBtn.className = "btn-primary";
+    saveBtn.textContent = "추가하기";
+    saveBtn.addEventListener("click", function () {
+      var titleVal = titleInput.value.trim();
+      if (!titleVal) {
+        titleInput.focus();
+        return;
+      }
+      var selectedFields = checkboxes.filter(function (cb) { return cb.checked; }).map(function (cb) { return cb.value; });
+      subject.topics.push({
+        id: genId("topic"),
+        title: titleVal,
+        desc: descInput.value.trim(),
+        tag: tagInput.value.trim() || "직접 추가",
+        fields: selectedFields,
+        custom: true
+      });
+      saveData();
+      addFormOpen = false;
+      currentField = "전체";
+      renderFieldTabs();
+      renderTopicPanel();
+      renderSubjects(currentGrade);
+    });
+
+    actions.appendChild(cancelBtn);
+    actions.appendChild(saveBtn);
+
+    form.appendChild(titleLabel);
+    form.appendChild(titleInput);
+    form.appendChild(descLabel);
+    form.appendChild(descInput);
+    form.appendChild(tagLabel);
+    form.appendChild(tagInput);
+    form.appendChild(fieldsLabel);
+    form.appendChild(fieldsBox);
+    form.appendChild(actions);
+
+    topicList.appendChild(form);
+    titleInput.focus();
+  }
+
+  function openTopics(subject) {
+    openSubjectId = subject.id;
+    addFormOpen = false;
+    renderTopicPanel();
     topicPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
+
+  // ---- 진로 분야 / 학년 탭 ----
 
   fieldTabs.addEventListener("click", function (e) {
     var tab = e.target.closest(".field-tab");
@@ -588,7 +982,7 @@
 
   gradeTabs.addEventListener("click", function (e) {
     var tab = e.target.closest(".grade-tab");
-    if (!tab) return;
+    if (!tab || draggedSubjectId) return;
     currentGrade = Number(tab.getAttribute("data-grade"));
     var allTabs = document.querySelectorAll(".grade-tab");
     for (var i = 0; i < allTabs.length; i++) allTabs[i].classList.remove("active");
@@ -599,6 +993,101 @@
 
   closePanel.addEventListener("click", function () {
     topicPanel.hidden = true;
+  });
+
+  resetBtn.addEventListener("click", function () {
+    if (!confirm("직접 추가한 주제와 과목 배치가 모두 사라지고 기본값으로 되돌아갑니다. 계속할까요?")) return;
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    location.reload();
+  });
+
+  // ---- 과목 카드 드래그 앤 드롭 ----
+
+  subjectGrid.addEventListener("dragstart", function (e) {
+    var card = e.target.closest(".subject-card");
+    if (!card) return;
+    draggedSubjectId = card.getAttribute("data-subject-id");
+    draggedFromGrade = Number(card.getAttribute("data-grade"));
+    if (e.dataTransfer) {
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/plain", draggedSubjectId);
+    }
+    card.classList.add("dragging");
+  });
+
+  subjectGrid.addEventListener("dragend", function (e) {
+    var card = e.target.closest(".subject-card");
+    if (card) card.classList.remove("dragging");
+    document.querySelectorAll(".subject-card.drag-over").forEach(function (c) { c.classList.remove("drag-over"); });
+    document.querySelectorAll(".grade-tab.drop-target").forEach(function (t) { t.classList.remove("drop-target"); });
+    draggedSubjectId = null;
+    draggedFromGrade = null;
+  });
+
+  subjectGrid.addEventListener("dragover", function (e) {
+    if (!draggedSubjectId) return;
+    e.preventDefault();
+    var card = e.target.closest(".subject-card");
+    document.querySelectorAll(".subject-card.drag-over").forEach(function (c) { c.classList.remove("drag-over"); });
+    if (card && card.getAttribute("data-subject-id") !== draggedSubjectId) {
+      card.classList.add("drag-over");
+    }
+  });
+
+  subjectGrid.addEventListener("drop", function (e) {
+    if (!draggedSubjectId) return;
+    e.preventDefault();
+    document.querySelectorAll(".subject-card.drag-over").forEach(function (c) { c.classList.remove("drag-over"); });
+
+    if (draggedFromGrade !== currentGrade) return;
+
+    var arr = DATA[currentGrade];
+    var fromIndex = arr.findIndex(function (s) { return s.id === draggedSubjectId; });
+    if (fromIndex === -1) return;
+
+    var card = e.target.closest(".subject-card");
+    var toIndex = card ? arr.findIndex(function (s) { return s.id === card.getAttribute("data-subject-id"); }) : arr.length - 1;
+    if (toIndex === -1 || toIndex === fromIndex) return;
+
+    var moved = arr.splice(fromIndex, 1)[0];
+    if (toIndex > fromIndex) toIndex--;
+    arr.splice(toIndex, 0, moved);
+
+    saveData();
+    renderSubjects(currentGrade);
+  });
+
+  gradeTabs.addEventListener("dragover", function (e) {
+    var tab = e.target.closest(".grade-tab");
+    if (!tab || !draggedSubjectId) return;
+    e.preventDefault();
+    document.querySelectorAll(".grade-tab.drop-target").forEach(function (t) { t.classList.remove("drop-target"); });
+    tab.classList.add("drop-target");
+  });
+
+  gradeTabs.addEventListener("dragleave", function (e) {
+    var tab = e.target.closest(".grade-tab");
+    if (tab) tab.classList.remove("drop-target");
+  });
+
+  gradeTabs.addEventListener("drop", function (e) {
+    var tab = e.target.closest(".grade-tab");
+    if (!tab || !draggedSubjectId) return;
+    e.preventDefault();
+    tab.classList.remove("drop-target");
+
+    var targetGrade = Number(tab.getAttribute("data-grade"));
+    if (targetGrade === draggedFromGrade) return;
+
+    var fromArr = DATA[draggedFromGrade];
+    var idx = fromArr.findIndex(function (s) { return s.id === draggedSubjectId; });
+    if (idx === -1) return;
+
+    var moved = fromArr.splice(idx, 1)[0];
+    DATA[targetGrade].push(moved);
+
+    saveData();
+    renderSubjects(currentGrade);
   });
 
   renderFieldTabs();
