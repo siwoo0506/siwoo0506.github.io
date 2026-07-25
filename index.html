@@ -1,5 +1,43 @@
-<html>
-<head><title>AI SW교실 4기</title></head>
-<body>Github pages 출력테스트2768kㄹㄴㄹ
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>생기부 주제 도우미</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1>생기부 주제 도우미</h1>
+      <p class="subtitle">2022 개정 교육과정 기준 · 학년과 과목을 선택하면 세특·탐구활동 기초자료로 참고할 주제를 확인할 수 있어요.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <nav class="grade-tabs" id="gradeTabs">
+      <button class="grade-tab active" data-grade="1">1학년</button>
+      <button class="grade-tab" data-grade="2">2학년</button>
+      <button class="grade-tab" data-grade="3">3학년</button>
+    </nav>
+
+    <section class="subject-grid" id="subjectGrid" aria-live="polite"></section>
+
+    <section class="topic-panel" id="topicPanel" hidden>
+      <div class="topic-panel-head">
+        <h2 id="topicSubjectName"></h2>
+        <button class="close-btn" id="closePanel" aria-label="닫기">✕</button>
+      </div>
+      <div class="topic-list" id="topicList"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>※ 아래 주제는 참고용 예시이며, 실제 활동 내용과 결과를 바탕으로 자신만의 기초자료를 작성해야 합니다.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
