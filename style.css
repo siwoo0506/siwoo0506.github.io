@@ -80,6 +80,43 @@ main.wrap {
   color: #fff;
 }
 
+.filter-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.field-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.field-tab {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--muted);
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.field-tab:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.field-tab.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
 .subject-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
